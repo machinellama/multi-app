@@ -98,14 +98,14 @@ import './angular-files/vendor';
 import './angular-files/main';
 import './angular-files/styles.css';
 ```
-- In *react-app/src/App.js*, replace 'Hello World' in the JSX with the new angular web-component:
+4. In *react-app/src/App.js*, replace 'Hello World' in the JSX with the new angular web-component:
 ```js
   <angular-component  />
 ```
 
-4. In *react-app*, run `npm run start`
+5. In *react-app*, run `npm run start`
 
-5. http://localhost:5070/ will open with your React app running with the Angular Web Component
+6. http://localhost:5070/ will open with your React app running with the Angular Web Component
 	- you should see 'llama' rendered on the page, which comes from the Angular Web Component (yay!)
 
 -----
