@@ -5,6 +5,7 @@
 
 **Prerequisites:** npm, yarn, ng
 
+-----
 ### Angular app setup with Web Component
 
 1. Create a new angular project
