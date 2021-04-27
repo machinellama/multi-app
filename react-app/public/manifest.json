@@ -1,0 +1,11 @@
+{
+  "name": "New Project Name",
+  "short_name": "New Project Short Name",
+  "description": "This is a description for the new project",
+  "start_url": "/",
+  "icons": "[]",
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
+  "display": "fullscreen",
+  "orientation": "portrait"
+}
