@@ -51,6 +51,7 @@
 ```
 5. In *angular-app*, run `ng build` to build the static Web Component files which we'll use later in our host React application
 
+-----
 ### React app setup
 
 1. Create a new React app using: https://github.com/MachineLlama/react-setup
@@ -76,6 +77,7 @@
 ```
 4. In *react-app*, run `npm i` so the webcomponentjs files are copied to *src/vendor*
 
+-----
 ### Build, copy, and run Angular module in React
 
 1. Create a new folder: *react-app/src/angular-files*
@@ -105,6 +107,7 @@ import './angular-files/styles.css';
 5. http://localhost:5070/ will open with your React app running with the Angular Web Component
 	- you should see 'llama' rendered on the page, which comes from the Angular Web Component (yay!)
 
+-----
 ### Pass data from React down to the Angular Web Component using an attribute value
 
 1. Add an input variable to the Angular module
@@ -152,6 +155,7 @@ export default App;
 6. In *react-app*, run `npm run start`
 	-  you should see an input in your React app, which will update text in the Angular Web Component
 
+-----
 ### Pass data from Angular Web Component up to React app using Custom Events
 
 1. Add an input in *angular-app/src/app/app.component.html*, replace all contents with:
@@ -217,7 +221,7 @@ function App() {
 }
 ```
 
-4. In *angular-app*, run `ng build` and copy files in *angular-app/dist/angular-app* to *react-app/src/angular-files*
+5. In *angular-app*, run `ng build` and copy files in *angular-app/dist/angular-app* to *react-app/src/angular-files*
 
-5. In *react-app*, run `npm run start`
+6. In *react-app*, run `npm run start`
 	- now you have a React app rendering an Angular module wrapped in a Web Component, with data going both ways between the two, nice
