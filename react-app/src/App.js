@@ -1,16 +1,15 @@
-import React, { useState } from 'react';
-
-import './angular-files/runtime';
-import './angular-files/polyfills';
-import './angular-files/vendor';
-import './angular-files/main';
-import './angular-files/styles.css';
+import React, { useEffect, useState } from 'react';
+import { load } from 'angular-web-component-load';
 
 import './App.scss';
 
 function App() {
   const [reactInputValue, setReactInputValue] = useState('');
   const [angularInputValue, setAngularInputValue] = useState('');
+
+  useEffect(() => {
+    load('http://localhost:4200');
+  }, []);
 
   document.addEventListener('angular-input-event', function (e) {
     setAngularInputValue(e.detail);

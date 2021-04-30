@@ -1,9 +1,8 @@
-
 # Multi-App
 
 ## Running an Angular module inside a React Application using Web Components
 
-**Prerequisites:** npm, yarn, ng
+**Prerequisites:** npm, ng
 
 -----
 ### Angular app setup with Web Component
@@ -61,10 +60,12 @@
 2. Install dependencies
 	- in *react-app*, run: `npm i @webcomponents/webcomponentsjs vendor-copy`
 
-3. Modify *react-app/package.json*
-	- add `"postinstall": "vendor-copy"` to the scripts array
-	- add these lines at the root level:
+3. Modify *react-app/package.json* to copy files to *react-app* that will be needed to load Web Components correctly
 ```json
+  "scripts": {
+    ...
+    "postinstall": "vendor-copy"
+  },
   "vendorCopy": [
     {
       "from": "node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js",
@@ -74,7 +75,7 @@
       "from": "node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js",
       "to": "src/vendor/webcomponents-bundle.js"
     }
-  ]
+  ],
 ```
 4. In *react-app*, run `npm i` so the webcomponentjs files are copied to *src/vendor*
 
@@ -90,35 +91,57 @@
 	- styles.css
 	- vendor.js
 
-3. In *react-app/src/App.js*, import Angular web component static files:
+3. Modify *react-app/src/App.js* to import the Angular Web Component static files and to render the new custom element
 ```js
+import React from 'react';
+
 import './angular-files/runtime';
 import './angular-files/polyfills';
 import './angular-files/vendor';
 import './angular-files/main';
 import './angular-files/styles.css';
-```
-4. In *react-app/src/App.js*, replace 'Hello World' in the JSX with the new angular web-component:
-```js
-  <angular-component  />
+
+import './App.scss';
+
+function App() {
+  return (
+    <div className="app">
+      <angular-component  />
+    </div>
+  )
+}
+
+export default App;
 ```
 
-5. In *react-app*, run `npm run start`
-
-6. http://localhost:5070/ will open with your React app running with the Angular Web Component
+4. In *react-app*, run `npm run start`
+    - http://localhost:5070/ will open with your React app running with the Angular Web Component
 	- you should see 'llama' rendered on the page, which comes from the Angular Web Component (yay!)
 
 -----
 ### Pass data from React down to the Angular Web Component using an attribute value
 
-1. Add an input variable to the Angular module
-	- in *angular-app/src/app/app.component.ts*, add `@Input() reactValue = '';` (right below the title variable)
-	- also import **Input** from @angular/core: `import { Component, Input } from '@angular/core';`
+1. Add an input variable to the Angular module in *angular-app/src/app/app.component.ts*
+```js
+import { Component, Input } from '@angular/core';
 
-2. Show **reactValue** in *angular-app/src/app/app.component.html*
-	- Replace 'llama' with: `<div>Value from React App: {{reactValue}}</div>`
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
+})
+export class AppComponent {
+  title = 'angular-app';
+  @Input() reactValue = '';
+}
+```
 
-3. Add an input in *react-app/src/App.js*:
+2. Show **reactValue** in *angular-app/src/app/app.component.html*. replace all with:
+```html
+<div>Value from React App: {{reactValue}}</div>
+```
+
+3. Add an input in *react-app/src/App.js*, whose value we will pass down from the React app to the Angular Web Component (important: notice the attribute in the Web Component is `react-value` to match the Angular variable of `reactValue`)
 ```js
 import React, { useState } from 'react';
 
@@ -140,7 +163,7 @@ function App() {
         value={reactInputValue}
       />
       <br/>
-      <angular-component />
+      <angular-component react-value={reactInputValue} />
     </div>
   )
 }
@@ -148,13 +171,10 @@ function App() {
 export default App;
 ```
 
-4. In *react-app/src/App.js*, pass **reactInputValue** to the Angular Web Component:
-	- `<angular-component  react-value={reactInputValue}  />`
+4. In *angular-app*, run `ng build` and copy files from *angular-app/dist/angular-app* to *react-app/src/angular-files*
 
-5. In *angular-app*, run `ng build` and copy files from *angular-app/dist/angular-app* to *react-app/src/angular-files*
-
-6. In *react-app*, run `npm run start`
-	-  you should see an input in your React app, which will update text in the Angular Web Component
+5. In *react-app*, run `npm run start`
+	-  you should see an input in your React app, which will update text in the Angular Web Component (nifty)
 
 -----
 ### Pass data from Angular Web Component up to React app using Custom Events
@@ -164,7 +184,7 @@ export default App;
 <div class="angular-app-container">
   <div><b>Angular Component</b></div>
   <div>Value from React App: {{reactValue}}</div>
-  Angular Input: <input (keyup)="onKey($event)">
+  <input (keyup)="onKey($event)">
 </div>
 ```
 2. Optional: add some styling for angular-app-container in *angular-app/src/app/app.component/scss*
@@ -225,4 +245,52 @@ function App() {
 5. In *angular-app*, run `ng build` and copy files in *angular-app/dist/angular-app* to *react-app/src/angular-files*
 
 6. In *react-app*, run `npm run start`
-	- now you have a React app rendering an Angular module wrapped in a Web Component, with data going both ways between the two, nice
+	- now you have a React app rendering an Angular module wrapped in a Web Component, with data going both ways between the two (nice)
+
+-----
+### Dynamically load scripts (no more copying needed)
+
+1. In *react-app*, run `npm i angular-web-component-load`
+
+2. Update *react-app/src/App.js* to remove static imports; angular-web-component-load assumes your Angular app is running and you have access to these chunk files: 'vendor.js', 'polyfills.js', 'main.js', 'runtime.js', and 'styles.css'. You can call the load function in this package with a given url and all the Angular chunk files will be appended as scripts (or link for the styles.css file) to the running app's document head section, if that particular script/link doesn't exist already:
+```js
+import React, { useEffect, useState } from 'react';
+import { load } from 'angular-web-component-load';
+
+import './App.scss';
+
+function App() {
+  const [reactInputValue, setReactInputValue] = useState('');
+  const [angularInputValue, setAngularInputValue] = useState('');
+
+  useEffect(() => {
+    load('http://localhost:4200');
+  }, []);
+
+  document.addEventListener('angular-input-event', function (e) {
+    setAngularInputValue(e.detail);
+  }, { capture: true });
+
+  return (
+    <div className="app">
+      <div><b>React App</b></div>
+      <div>Value from Angular Component: {angularInputValue}</div>
+      <div>
+        <input
+          onChange={(e) => setReactInputValue(e.target.value)}
+          value={reactInputValue}
+        />
+      </div>
+      <div><angular-component react-value={reactInputValue} /></div>
+    </div>
+  )
+}
+
+export default App;
+```
+
+3. Run *angular-app* with `ng serve`. This will run the app on a given port (4200 in this case) and we can access the necessary Web Component scripts from there
+
+4. Run *react-app* with `npm run start` and everything should work the same as before
+
+5. Now try updating *angular-app/src/app/app.component.html* and restarting *angular-app* with `ng serve`. If you refresh your React app in your browser, you'll see the update to the Angular Web Component without needing to copy static build files over and without needing to restart the React application. This is crucial for large scale production applications because it means you can make updates to small parts of your application (which are running indepedently on different urls or ports) without needing to update/restart your main application. The user will simply need to refresh their browser to see the new content and the app will have no downtime (so cool!)
