@@ -57,39 +57,18 @@
 1. Create a new React app using: https://github.com/MachineLlama/react-setup
 	- run with: `node start react-app`
 
-2. Install dependencies
-	- in *react-app*, run: `npm i @webcomponents/webcomponentsjs vendor-copy`
-
-3. Modify *react-app/package.json* to copy files to *react-app* that will be needed to load Web Components correctly
-```json
-  "scripts": {
-    ...
-    "postinstall": "vendor-copy"
-  },
-  "vendorCopy": [
-    {
-      "from": "node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js",
-      "to": "src/vendor/custom-elements-es5-adapter.js"
-    },
-    {
-      "from": "node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js",
-      "to": "src/vendor/webcomponents-bundle.js"
-    }
-  ],
-```
-4. In *react-app*, run `npm i` so the webcomponentjs files are copied to *src/vendor*
-
 -----
 ### Build, copy, and run Angular module in React
 
 1. Create a new folder: *react-app/src/angular-files*
 
 2. Copy these files from *angular-app/dist/angular-app* to *react-app/src/angular-files*:
-	- main.js
-	- polyfills.js
-	- runtime.js
-	- styles.css
-	- vendor.js
+    - main.js
+    - polyfills.js
+    - runtime.js
+    - styles.css
+    - styles.js (if it exists)
+    - vendor.js
 
 3. Modify *react-app/src/App.js* to import the Angular Web Component static files and to render the new custom element
 ```js
@@ -99,6 +78,7 @@ import './angular-files/runtime';
 import './angular-files/polyfills';
 import './angular-files/vendor';
 import './angular-files/main';
+import './angular-files/styles'; // if styles.js exists
 import './angular-files/styles.css';
 
 import './App.scss';
@@ -149,6 +129,7 @@ import './angular-files/runtime';
 import './angular-files/polyfills';
 import './angular-files/vendor';
 import './angular-files/main';
+import './angular-files/styles'; // if styles.js exists
 import './angular-files/styles.css';
 
 import './App.scss';

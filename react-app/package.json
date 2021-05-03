@@ -8,19 +8,8 @@
     "clean": "rimraf dist",
     "build": "npm run clean && webpack --mode production",
     "start": "npm run build && webpack serve --mode development",
-    "start-prod": "webpack serve --mode production",
-    "postinstall": "vendor-copy"
+    "start-prod": "webpack serve --mode production"
   },
-  "vendorCopy": [
-    {
-      "from": "node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js",
-      "to": "src/vendor/custom-elements-es5-adapter.js"
-    },
-    {
-      "from": "node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js",
-      "to": "src/vendor/webcomponents-bundle.js"
-    }
-  ],
   "repository": {
     "type": "git",
     "url": "repository_url"
@@ -33,11 +22,9 @@
   "author": "author_name",
   "license": "MIT",
   "dependencies": {
-    "@webcomponents/webcomponentsjs": "^2.5.0",
-    "angular-web-component-load": "^1.0.0",
+    "angular-web-component-load": "^1.0.1",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "vendor-copy": "^3.0.1"
+    "react-dom": "^17.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.14.0",
