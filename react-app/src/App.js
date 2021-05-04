@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { load } from 'angular-web-component-load';
+import { load } from 'web-component-load';
 
 import './App.scss';
 
