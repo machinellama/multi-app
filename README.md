@@ -231,12 +231,12 @@ function App() {
 -----
 ### Dynamically load scripts (no more copying needed)
 
-1. In *react-app*, run `npm i angular-web-component-load`
+1. In *react-app*, run `npm i web-component-load`
 
-2. Update *react-app/src/App.js* to remove static imports; angular-web-component-load assumes your Angular app is running and you have access to these chunk files: 'vendor.js', 'polyfills.js', 'main.js', 'runtime.js', and 'styles.css'. You can call the load function in this package with a given url and all the Angular chunk files will be appended as scripts (or link for the styles.css file) to the running app's document head section, if that particular script/link doesn't exist already:
+2. Update *react-app/src/App.js* to remove static imports; web-component-load assumes your Angular app is running and you have access to these chunk files: 'vendor.js', 'polyfills.js', 'main.js', 'runtime.js', and 'styles.css'. You can call the load function in this package with a given url and all the Angular chunk files will be appended as scripts (or link for the styles.css file) to the running app's document head section, if that particular script/link doesn't exist already:
 ```js
 import React, { useEffect, useState } from 'react';
-import { load } from 'angular-web-component-load';
+import { load } from 'web-component-load';
 
 import './App.scss';
 
