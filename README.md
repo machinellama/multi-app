@@ -5,7 +5,7 @@
 **Prerequisites:** npm, ng
 
 -----
-### Angular app setup with Web Component
+### 1. Angular app setup with Web Component
 
 1. Create a new angular project
    - `ng new angular-app`
@@ -52,13 +52,13 @@
 5. In *angular-app*, run `ng build` to build the static Web Component files which we'll use later in our host React application
 
 -----
-### React app setup
+### 2. React app setup
 
 1. Create a new React app using: https://github.com/MachineLlama/react-setup
 	- run with: `node start react-app`
 
 -----
-### Build, copy, and run Angular module in React
+### 3. Build, copy, and run Angular module in React
 
 1. Create a new folder: *react-app/src/angular-files*
 
@@ -99,7 +99,7 @@ export default App;
 	- you should see 'llama' rendered on the page, which comes from the Angular Web Component (yay!)
 
 -----
-### Pass data from React down to the Angular Web Component using an attribute value
+### 4. Pass data from React down to the Angular Web Component using an attribute value
 
 1. Add an input variable to the Angular module in *angular-app/src/app/app.component.ts*
 ```js
@@ -158,7 +158,7 @@ export default App;
 	-  you should see an input in your React app, which will update text in the Angular Web Component (nifty)
 
 -----
-### Pass data from Angular Web Component up to React app using Custom Events
+### 5. Pass data from Angular Web Component up to React app using Custom Events
 
 1. Add an input in *angular-app/src/app/app.component.html*, replace all contents with:
 ```html
@@ -229,7 +229,7 @@ function App() {
 	- now you have a React app rendering an Angular module wrapped in a Web Component, with data going both ways between the two (nice)
 
 -----
-### Dynamically load scripts (no more copying needed)
+### 6. Dynamically load scripts (no more copying needed)
 
 1. In *react-app*, run `npm i web-component-load`
 
