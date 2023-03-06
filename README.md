@@ -54,9 +54,7 @@
 -----
 ### 2. React app setup
 
-* Create a new React app using: https://github.com/MachineLlama/react-setup
-	- run with: `node start react-app`
-	- or alternatively, use Create React App: https://create-react-app.dev
+* Create a new React app using Create React App: https://create-react-app.dev
 
 -----
 ### 3. Build, copy, and run Angular module in React
