@@ -1,3 +1,5 @@
+# This repo is deprecated and will no longer be updated
+
 # Multi-App
 
 ## Running an Angular module inside a React Application using Web Components
